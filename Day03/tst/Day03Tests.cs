@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using AdventOfCode.Common;
 using AdventOfCode.Day03;
 using Xunit;
@@ -16,19 +17,29 @@ public class Day03Tests
     }
 
     [Fact]
-    public void Part1_WithSampleData_ShouldBeXXX()
+    public void Part1_WithSampleData_ShouldBe161()
     {
-        throw new NotImplementedException();
+        Solver solver = new();
+
+        Assert.Equal(161, solver.SumMulOpsInLine(data[0]));
     }
 
     [Fact]
-    public void Part2_WithSampleData_ShouldBeXXX()
+    public void Part2_WithSampleData_ShouldBe48()
     {
-        throw new NotImplementedException();
+        Solver solver = new();
+        Regex condPattern = new Regex(@"don't\(\).*?do\(\)");
+
+        int total = 0;
+        string line = condPattern.Replace(data[1], "");
+        total += solver.SumMulOpsInLine(line);
+
+        Assert.Equal(48, total);
     }
 
     private string[] data;
     private string sampleInput = """
-SAMPLE INPUT HERE
+xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))
+xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))
 """;
 }
