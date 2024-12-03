@@ -9,34 +9,35 @@ public class Solver
         int numSafe = 0;
         foreach (string rowData in data)
         {
-            bool stopProcessing = false;
-
             List<int> row = rowData
                 .Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToList();
 
-            bool isAsc = false;
-            bool isDes = false;
-            for (int i = 1; i < row.Count(); i++)
-            {
-                if (Math.Abs(row[i] - row[i - 1]) > 3) stopProcessing = true;
-                if (row[i] == row[i - 1]) stopProcessing = true;
-                if (row[i] > row[i - 1]) isAsc = true;
-                if (row[i] < row[i - 1]) isDes = true;
-                if (isAsc && isDes) stopProcessing = true;
-            }
-            if (stopProcessing) continue;
-
-            numSafe++;
+            if (IsSafe(row))
+                numSafe++;
         }
 
         Console.WriteLine($"Part 1: {numSafe}");
     }
 
+    public bool IsSafe(List<int> row)
+    {
+        HashSet<int> set = new();
+        for (int i = 1; i < row.Count(); i++)
+            set.Add(row[i] - row[i - 1]);
+
+        if (set.Except(new HashSet<int> { 1, 2, 3 }).Count() == 0 ||
+            set.Except(new HashSet<int> { -1, -2, -3 }).Count() == 0)
+            return true;
+        else
+            return false;
+    }
+
     public void SolvePart2(string[] data)
     {
         int numSafe = 0;
+
         foreach (string rowData in data)
         {
             List<int> row = rowData
@@ -44,11 +45,8 @@ public class Solver
                 .Select(int.Parse)
                 .ToList();
 
-            bool rowIsSafe = false;
-            for (int level = -1; level < row.Count() && !rowIsSafe; level++)
+            for (int level = -1; level < row.Count(); level++)
             {
-                bool stopProcessing = false;
-
                 List<int> opRow = rowData
                     .Split(' ', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
                     .Select(int.Parse)
@@ -56,20 +54,11 @@ public class Solver
 
                 if (level >= 0) opRow.RemoveAt(level);
 
-                bool isAsc = false;
-                bool isDes = false;
-                for (int i = 1; i < opRow.Count(); i++)
+                if (IsSafe(opRow))
                 {
-                    if (Math.Abs(opRow[i] - opRow[i - 1]) > 3) stopProcessing = true;
-                    if (opRow[i] == opRow[i - 1]) stopProcessing = true;
-                    if (opRow[i] > opRow[i - 1]) isAsc = true;
-                    if (opRow[i] < opRow[i - 1]) isDes = true;
-                    if (isAsc && isDes) stopProcessing = true;
+                    numSafe++;
+                    break;
                 }
-                if (stopProcessing) continue;
-
-                rowIsSafe = true;
-                numSafe++;
             }
         }
 
