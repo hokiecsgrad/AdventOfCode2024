@@ -4,9 +4,9 @@ namespace AdventOfCode.Day04;
 
 public class Solver
 {
-    public void SolvePart1(string[] data)
+    public string SolvePart1(string[] data)
     {
-        int total = 0;
+        int answer = 0;
 
         char[,] grid = CreateGrid(data);
 
@@ -17,9 +17,40 @@ public class Solver
                     for (int i = -1; i <= 1; i++)
                         for (int j = -1; j <= 1; j++)
                             if (IsMas(grid, (y + i, x + j), (i, j)))
-                                total++;
+                                answer++;
                 }
-        Console.WriteLine($"Part 1: {total}");
+
+        return answer.ToString();
+    }
+
+    public string SolvePart2(string[] data)
+    {
+        int answer = 0;
+
+        char[,] grid = CreateGrid(data);
+
+        for (int y = 0; y < grid.GetLength(0); y++)
+            for (int x = 0; x < grid.GetLength(1); x++)
+                if (grid[y, x] == 'M')
+                {
+                    if (IsMas(grid, (y, x), (1, 1)) &&
+                        IsMas(grid, (y, x + 2), (1, -1)))
+                        answer++;
+                    else if (IsMas(grid, (y, x), (1, 1)) &&
+                        IsSam(grid, (y, x + 2), (1, -1)))
+                        answer++;
+                }
+                else if (grid[y, x] == 'S')
+                {
+                    if (IsSam(grid, (y, x), (1, 1)) &&
+                        IsMas(grid, (y, x + 2), (1, -1)))
+                        answer++;
+                    else if (IsSam(grid, (y, x), (1, 1)) &&
+                        IsSam(grid, (y, x + 2), (1, -1)))
+                        answer++;
+                }
+
+        return answer.ToString();
     }
 
     public char[,] CreateGrid(string[] data)
@@ -54,35 +85,6 @@ public class Solver
                     neighbors.Add((i, j));
 
         return neighbors.ToArray();
-    }
-
-    public void SolvePart2(string[] data)
-    {
-        int total = 0;
-
-        char[,] grid = CreateGrid(data);
-
-        for (int y = 0; y < grid.GetLength(0); y++)
-            for (int x = 0; x < grid.GetLength(1); x++)
-                if (grid[y, x] == 'M')
-                {
-                    if (IsMas(grid, (y, x), (1, 1)) &&
-                        IsMas(grid, (y, x + 2), (1, -1)))
-                        total++;
-                    else if (IsMas(grid, (y, x), (1, 1)) &&
-                        IsSam(grid, (y, x + 2), (1, -1)))
-                        total++;
-                }
-                else if (grid[y, x] == 'S')
-                {
-                    if (IsSam(grid, (y, x), (1, 1)) &&
-                        IsMas(grid, (y, x + 2), (1, -1)))
-                        total++;
-                    else if (IsSam(grid, (y, x), (1, 1)) &&
-                        IsSam(grid, (y, x + 2), (1, -1)))
-                        total++;
-                }
-        Console.WriteLine($"Part 2: {total}");
     }
 
     public bool IsMas(char[,] grid, (int y, int x) pos, (int i, int j) dir)

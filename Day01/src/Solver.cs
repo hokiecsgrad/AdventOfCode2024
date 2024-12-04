@@ -6,12 +6,20 @@ namespace AdventOfCode.Day01;
 
 public class Solver
 {
-    public void SolvePart1(string[] data)
+    public string SolvePart1(string[] data)
     {
         var lists = SplitArrayIntoTwo(data);
         int sum = OrderAndSumTheDiffs(lists.Item1, lists.Item2);
 
-        Console.WriteLine($"Part 1: {sum}");
+        return sum.ToString();
+    }
+
+    public string SolvePart2(string[] data)
+    {
+        var lists = SplitArrayIntoTwo(data);
+        int sum = SumSimilarityScores(lists.Item1, lists.Item2);
+
+        return sum.ToString();
     }
 
     public (List<int>, List<int>) SplitArrayIntoTwo(string[] data)
@@ -20,14 +28,14 @@ public class Solver
             .Select(
                 x => int.Parse(
                     x.Split(' ', StringSplitOptions.TrimEntries |
-                        StringSplitOptions.RemoveEmptyEntries)[0]))
+                                 StringSplitOptions.RemoveEmptyEntries)[0]))
             .ToList();
 
         List<int> secondNums = data
             .Select(
                 x => int.Parse(
                     x.Split(' ', StringSplitOptions.TrimEntries |
-                        StringSplitOptions.RemoveEmptyEntries)[1]))
+                                 StringSplitOptions.RemoveEmptyEntries)[1]))
             .ToList();
 
         return (firstNums, secondNums);
@@ -47,14 +55,6 @@ public class Solver
             .Sum();
 
         return sum;
-    }
-
-    public void SolvePart2(string[] data)
-    {
-        var lists = SplitArrayIntoTwo(data);
-        int sum = SumSimilarityScores(lists.Item1, lists.Item2);
-
-        Console.WriteLine($"Part 2: {sum}");
     }
 
     public int SumSimilarityScores(List<int> one, List<int> two)

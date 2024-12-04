@@ -5,11 +5,20 @@ namespace AdventOfCode.Day03;
 
 public class Solver
 {
-    public void SolvePart1(string[] data)
+    public string SolvePart1(string[] data)
+    {
+        string line = String.Join("", data);
+        return SumMulOpsInLine(line).ToString();
+    }
+
+    public string SolvePart2(string[] data)
     {
         string line = String.Join("", data);
 
-        Console.WriteLine($"Part 1: {SumMulOpsInLine(line)}");
+        Regex condPattern = new Regex(@"don't\(\).*?do\(\)");
+        line = condPattern.Replace(line, "");
+
+        return SumMulOpsInLine(line).ToString();
     }
 
     public int SumMulOpsInLine(string line)
@@ -23,15 +32,5 @@ public class Solver
                         int.Parse(match.Groups[3].Value);
 
         return total;
-    }
-
-    public void SolvePart2(string[] data)
-    {
-        string line = String.Join("", data);
-
-        Regex condPattern = new Regex(@"don't\(\).*?do\(\)");
-        line = condPattern.Replace(line, "");
-
-        Console.WriteLine($"Part 2: {SumMulOpsInLine(line)}");
     }
 }

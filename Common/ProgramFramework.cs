@@ -3,8 +3,8 @@ using System;
 namespace AdventOfCode.Common;
 
 public delegate string[] InputFunc();
-public delegate void SolvePart1Func(string[] data);
-public delegate void SolvePart2Func(string[] data);
+public delegate string SolvePart1Func(string[] data);
+public delegate string SolvePart2Func(string[] data);
 
 public class ProgramFramework
 {
@@ -32,7 +32,7 @@ public class ProgramFramework
         {
             watch.Start();
             Console.WriteLine("Solving part 1...");
-            Part1Handler(data);
+            Console.WriteLine($"Part 1: {Part1Handler(data)}");
             watch.Stop();
             timeToSolvePart1 = watch.ElapsedMilliseconds - timeToLoadInput;
             Console.WriteLine($"Part 1 solved in {timeToSolvePart1} ms.");
@@ -43,7 +43,7 @@ public class ProgramFramework
         {
             watch.Start();
             Console.WriteLine("Solving part 2...");
-            Part2Handler(data);
+            Console.WriteLine($"Part 2: {Part2Handler(data)}");
             watch.Stop();
             timeToSolvePart2 = watch.ElapsedMilliseconds - timeToSolvePart1 - timeToLoadInput;
             Console.WriteLine($"Part 2 solved in {timeToSolvePart2} ms.");
