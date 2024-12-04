@@ -28,13 +28,11 @@ public class Day03Tests
     public void Part2_WithSampleData_ShouldBe48()
     {
         Solver solver = new();
+
         Regex condPattern = new Regex(@"don't\(\).*?do\(\)");
-
-        int total = 0;
         string line = condPattern.Replace(data[1], "");
-        total += solver.SumMulOpsInLine(line);
 
-        Assert.Equal(48, total);
+        Assert.Equal(48, solver.SumMulOpsInLine(line));
     }
 
     private string[] data;

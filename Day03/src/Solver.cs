@@ -7,12 +7,9 @@ public class Solver
 {
     public void SolvePart1(string[] data)
     {
-        int total = 0;
+        string line = String.Join("", data);
 
-        foreach (string line in data)
-            total += SumMulOpsInLine(line);
-
-        Console.WriteLine($"Part 1: {total}");
+        Console.WriteLine($"Part 1: {SumMulOpsInLine(line)}");
     }
 
     public int SumMulOpsInLine(string line)
@@ -30,15 +27,11 @@ public class Solver
 
     public void SolvePart2(string[] data)
     {
-        Regex condPattern = new Regex(@"don't\(\).*?do\(\)");
-
-        int total = 0;
-
         string line = String.Join("", data);
+
+        Regex condPattern = new Regex(@"don't\(\).*?do\(\)");
         line = condPattern.Replace(line, "");
 
-        total += SumMulOpsInLine(line);
-
-        Console.WriteLine($"Part 2: {total}");
+        Console.WriteLine($"Part 2: {SumMulOpsInLine(line)}");
     }
 }
