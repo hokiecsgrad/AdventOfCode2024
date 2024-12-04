@@ -102,7 +102,7 @@ public class Day04Tests
         Assert.Equal(9, total);
     }
 
-    private string[] data;
+    private string[]? data;
     private string simpleInputPart1 = """
 ..X...
 .SAMX.
