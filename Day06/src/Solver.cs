@@ -6,11 +6,11 @@ public class Solver
 {
     public string SolvePart1(string[] data)
     {
-        return String.Empty();
+        return String.Empty;
     }
 
     public string SolvePart2(string[] data)
     {
-        return String.Empty();
+        return String.Empty;
     }
 }
