@@ -27,15 +27,15 @@ Day01\
 ## Running tests
 
 ```
-> cd Day01
-> dotnet build && dotnet test tst/
+> cd Day01/tst
+> dotnet build && dotnet test
 ```
 
 ## Running that Day's solution
 
 ```
-> cd Day01
-> dotnet build src/ && dotnet run src/
+> cd Day01/src
+> dotnet build && dotnet run
 ```
 
 ## Un/Installing the Template
