@@ -4,15 +4,13 @@ namespace AdventOfCode.Day00;
 
 public class Solver
 {
-    public void SolvePart1(string[] data)
+    public string SolvePart1(string[] data)
     {
-
-        Console.WriteLine($"Part 1: ");
+        return String.Empty();
     }
 
-    public void SolvePart2(string[] data)
+    public string SolvePart2(string[] data)
     {
-
-        Console.WriteLine($"Part 2: ");
+        return String.Empty();
     }
 }
