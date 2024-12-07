@@ -16,19 +16,38 @@ public class Day06Tests
     }
 
     [Fact]
-    public void Part1_WithSampleData_ShouldBeXXX()
+    public void Part1_WithSampleData_ShouldBe41()
     {
-        throw new NotImplementedException();
+        Solver solver = new();
+        int total = 0;
+
+        total = int.Parse(solver.SolvePart1(data));
+
+        Assert.Equal(41, total);
     }
 
     [Fact]
-    public void Part2_WithSampleData_ShouldBeXXX()
+    public void Part2_WithSampleData_ShouldBe6()
     {
-        throw new NotImplementedException();
+        Solver solver = new();
+        int total = 0;
+
+        total = int.Parse(solver.SolvePart2(data));
+
+        Assert.Equal(6, total);
     }
 
     private string[] data;
     private string sampleInput = """
-SAMPLE INPUT HERE
+....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
 """;
 }
