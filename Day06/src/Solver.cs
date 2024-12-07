@@ -68,7 +68,7 @@ public class Solver
 
         while (IsNexPosInGrid(guardPos, guardDir, grid.GetLength(0), grid.GetLength(1)))
         {
-            if (IsNextPosIsObstacle(grid, guardPos, guardDir))
+            if (IsNextPosAnObstacle(grid, guardPos, guardDir))
             {
                 grid[guardPos.row, guardPos.col] = TurnRight(grid[guardPos.row, guardPos.col]);
                 guardDir = GetGuardDir(grid[guardPos.row, guardPos.col]);
@@ -128,7 +128,7 @@ public class Solver
             guardPos.col + guardDir.col >= 0 &&
             guardPos.col + guardDir.col < gridCols;
 
-    public bool IsNextPosIsObstacle(
+    public bool IsNextPosAnObstacle(
             char[,] grid,
             (int row, int col) guardPos,
             (int row, int col) guardDir)
