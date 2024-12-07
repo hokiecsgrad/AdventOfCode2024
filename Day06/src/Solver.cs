@@ -4,13 +4,18 @@ namespace AdventOfCode.Day06;
 
 public class Solver
 {
-    private const int MAX_PATH_LENGTH = 100_000;
+    private double MAX_PATH_LENGTH = 10_000;
 
     public string SolvePart1(string[] data)
     {
         char[,] grid = CreateGrid(data);
-        RunPatrolPath(grid);
+        List<(int, int)> path = RunPatrolPath(grid);
         int total = CountCharsInGrid('X', grid);
+
+        // to save time on the solution to part 2, 
+        // set the max path length to 1.5 the 
+        // expected value
+        MAX_PATH_LENGTH = Math.Floor(path.Count() * 1.5);
 
         return total.ToString();
     }
@@ -24,7 +29,8 @@ public class Solver
 
         List<(int, int)> path = RunPatrolPath(grid);
 
-        foreach ((int row, int col) pos in path)
+        HashSet<(int, int)> uniquePositions = new(path);
+        foreach ((int row, int col) pos in uniquePositions)
         {
             if (pos == startPos) continue;
 
