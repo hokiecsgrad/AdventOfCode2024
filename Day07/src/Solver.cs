@@ -2,6 +2,9 @@ using AdventOfCode.Common;
 
 namespace AdventOfCode.Day07;
 
+// TODO: Make sense of this solution and attempt to recreate it
+// in order to learn how it works.
+// https://github.com/dmitry-shechtman/aoc2024/blob/main/day07/Program.cs
 public class Solver
 {
     public string SolvePart1(string[] data)
