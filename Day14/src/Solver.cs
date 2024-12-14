@@ -51,19 +51,15 @@ public class Solver
                 dangerIndex = i;
             }
 
-            /*
             if (i == 8158)
             {
                 PrintGrid(103, 101, robots);
                 Console.WriteLine($"Testing iteration {i}");
-                while (Console.ReadKey(true).Key != ConsoleKey.Spacebar) { }
                 //System.Threading.Thread.Sleep(100);
+                //while (Console.ReadKey(true).Key != ConsoleKey.Spacebar) { }
             }
             else
-            {
                 Console.WriteLine($"Testing iteration {i}");
-            }
-            */
         }
 
         return dangerIndex.ToString();
