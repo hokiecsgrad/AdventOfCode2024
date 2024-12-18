@@ -10,9 +10,30 @@ public class Day17Tests
     {
         data = sampleInput.Split(
             '\n',
-            StringSplitOptions.TrimEntries |
-            StringSplitOptions.RemoveEmptyEntries
+            StringSplitOptions.TrimEntries
             );
+    }
+
+    [Fact]
+    public void ParseRegisters_WithSampleData_ShouldWork()
+    {
+        Solver solver = new();
+        Dictionary<char, long> registers = new();
+
+        registers = solver.ParseRegisters(data);
+
+        Assert.Equal(729, registers['A']);
+        Assert.Equal(0, registers['B']);
+        Assert.Equal(0, registers['C']);
+    }
+
+    [Fact]
+    public void ParseProgram_WithSampleData_ShouldWork()
+    {
+        Solver solver = new();
+        List<int> program = solver.ParseProgram(data);
+
+        Assert.Equal(new List<int> { 0, 1, 5, 4, 3, 0 }, program);
     }
 
     [Fact]
@@ -29,6 +50,10 @@ public class Day17Tests
 
     private string[] data;
     private string sampleInput = """
-SAMPLE INPUT HERE
+Register A: 729
+Register B: 0
+Register C: 0
+
+Program: 0,1,5,4,3,0
 """;
 }
