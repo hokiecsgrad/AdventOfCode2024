@@ -44,32 +44,41 @@ public static class GridHelper
         return neighbors;
     }
 
-    public static List<Point> GetOrthagonalNeighbors<T>(T[,] grid, Point currPosition)
+    public static List<Node> GetOrthagonalNeighbors(Node[,] grid, Node currPosition)
         => GetOrthagonalNeighbors(grid, currPosition, x => true);
 
-    public static List<Point> GetOrthagonalNeighbors<T>(T[,] grid, Point currPosition, Func<T, bool> comparer)
+    public static List<Node> GetOrthagonalNeighbors(Node[,] grid, Node currPosition, Func<Node, bool> comparer)
     {
-        List<Point> neighbors = new();
+        List<Node> neighbors = new();
 
-        int row = currPosition.Row - 1;
-        int col = currPosition.Col;
+        int row = currPosition.Position.Row - 1;
+        int col = currPosition.Position.Col;
         if (row >= 0 && comparer(grid[row, col]))
-            neighbors.Add(new Point(row, col));
+            neighbors.Add(grid[row, col]);
 
-        row = currPosition.Row + 1;
+        row = currPosition.Position.Row + 1;
         if (row < grid.GetLength(0) && comparer(grid[row, col]))
-            neighbors.Add(new Point(row, col));
+            neighbors.Add(grid[row, col]);
 
-        row = currPosition.Row;
-        col = currPosition.Col - 1;
+        row = currPosition.Position.Row;
+        col = currPosition.Position.Col - 1;
         if (col >= 0 && comparer(grid[row, col]))
-            neighbors.Add(new Point(row, col));
+            neighbors.Add(grid[row, col]);
 
-        col = currPosition.Col + 1;
+        col = currPosition.Position.Col + 1;
         if (col < grid.GetLength(1) && comparer(grid[row, col]))
-            neighbors.Add(new Point(row, col));
+            neighbors.Add(grid[row, col]);
 
         return neighbors;
+    }
+
+    public static Node GetPositionOf(Node[,] grid, char target)
+    {
+        for (int row = 0; row < grid.GetLength(0); row++)
+            for (int col = 0; col < grid.GetLength(1); col++)
+                if (grid[row, col].Value == target)
+                    return grid[row, col];
+        return new Node(new Point(-1, -1), '\0');
     }
 
     public static void PrintGrid<T>(T[,] grid)
