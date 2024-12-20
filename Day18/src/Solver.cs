@@ -7,7 +7,7 @@ public class Solver
 {
     public string SolvePart1(string[] data)
     {
-        Node[,] maze = CreateGrid(71, 71, '.');
+        Node[,] maze = GridHelper.CreateGrid(71, 71, new Node(new Point(), '.'));
         List<Point> walls = ParseData(data);
 
         AddWallsToMaze(ref maze, walls.Take(1024).ToList());
@@ -23,7 +23,7 @@ public class Solver
 
     public string SolvePart2(string[] data)
     {
-        Node[,] maze = CreateGrid(71, 71, '.');
+        Node[,] maze = GridHelper.CreateGrid(71, 71, new Node(new Point(), '.'));
         List<Point> walls = ParseData(data);
 
         AddWallsToMaze(ref maze, walls.Take(1024).ToList());
@@ -125,18 +125,6 @@ public class Solver
             for (int col = 0; col < maze.GetLength(1); col++)
                 if (walls.Contains(new Point(row, col)))
                     maze[row, col] = new Node(new Point(row, col), '#');
-    }
-
-    public Node[,] CreateGrid(int rows, int cols, char fillChar = '\0')
-    {
-        Node[,] grid = new Node[rows, cols];
-
-        if (fillChar != '\0')
-            for (int row = 0; row < rows; row++)
-                for (int col = 0; col < cols; col++)
-                    grid[row, col] = new Node(new Point(row, col), fillChar);
-
-        return grid;
     }
 
     public List<Point> ParseData(string[] data)

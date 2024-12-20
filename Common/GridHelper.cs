@@ -16,7 +16,7 @@ public static class GridHelper
         return grid;
     }
 
-    public static List<T> GetAllNeighbors<T>(T[,] grid, Point currPosition)
+    public static List<Point> GetAllNeighbors<T>(T[,] grid, Point currPosition)
         => GetAllNeighbors(grid, currPosition, x => true);
 
     public static List<Point> GetAllNeighbors<T>(T[,] grid, Point currPosition, Func<T, bool> comparer)
