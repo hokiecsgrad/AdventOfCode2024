@@ -7,23 +7,20 @@ public class Solver
 {
     public string SolvePart1(string[] data)
     {
-        long checksum = 0;
-
         List<long> hdd = ExplodeMap(data[0]);
         hdd = Defrag(hdd);
-        checksum = CalcChecksum(hdd);
+        long checksum = CalcChecksum(hdd);
 
         return checksum.ToString();
     }
 
     public string SolvePart2(string[] data)
     {
-        long checksum = 0;
-
         List<long> hdd = ExplodeMap(data[0]);
         hdd = DefragContiguous(hdd);
-        checksum = CalcChecksum(hdd);
+        long checksum = CalcChecksum(hdd);
 
+        // 6415163644414 too high
         return checksum.ToString();
     }
 
@@ -85,7 +82,15 @@ public class Solver
             int endFile = rIndex;
             while (defragged[rIndex] == currFileId) rIndex--;
             int startFile = rIndex + 1;
-            int fileLength = (endFile - startFile) + 1;
+            int fileLength = endFile - startFile + 1;
+
+            //           1         2         3         4
+            // 012345678901234567890123456789012345678901
+            // 00...111...2...333.44.5555.6666.777.888899
+            // 0099.111...2...333.44.5555.6666.777.8888..
+            // 0099.1117772...333.44.5555.6666.....8888..
+            // 0099.111777244.333....5555.6666.....8888..
+            // 00992111777.44.333....5555.6666.....8888..
 
             bool spaceFound = false;
             int lIndex = 0;
@@ -120,7 +125,7 @@ public class Solver
 
         for (int i = 0; i < hdd.Count(); i++)
             if (hdd[i] != -1)
-                total += (i * hdd[i]);
+                total += i * hdd[i];
 
         return total;
     }
