@@ -1,5 +1,5 @@
 
-namespace AdventOfCode.Common;
+namespace AdventOfCode.Reference;
 
 public class Node
 {
@@ -14,6 +14,13 @@ public class Node
     {
         Position = pos;
         Value = val;
+        Cost = int.MaxValue;
+    }
+
+    public Node()
+    {
+        Position = new Point(-1, -1);
+        Value = '\0';
         Cost = int.MaxValue;
     }
 }

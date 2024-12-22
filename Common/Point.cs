@@ -1,6 +1,6 @@
 using System;
 
-namespace AdventOfCode.Common;
+namespace AdventOfCode.Reference;
 
 public class Point : IComparable<Point>
 {

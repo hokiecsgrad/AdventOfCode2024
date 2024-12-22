@@ -1,19 +1,71 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdventOfCode.Common;
+namespace AdventOfCode.Reference;
 
 public static class GridHelper
 {
-    public static T[,] CreateGrid<T>(int maxRows, int maxCols, T defaultValue = default(T))
+    public static Node[,] CreateGrid(int maxRows, int maxCols, Node defaultValue)
     {
-        T[,] grid = new T[maxRows, maxCols];
+        Node[,] grid = new Node[maxRows, maxCols];
 
         for (int row = 0; row < maxRows; row++)
             for (int col = 0; col < maxCols; col++)
                 grid[row, col] = defaultValue;
 
         return grid;
+    }
+
+    public static Stack<Node> AStar(Node[,] maze, Node start, Node goal)
+    {
+        Stack<Node> path = new();
+        PriorityQueue<Node, int> openList = new();
+        List<Node> closedList = new();
+
+        start.Cost = 0;
+        start.DistanceToTarget = Math.Abs(goal.Position.Row - start.Position.Row) + Math.Abs(goal.Position.Col - start.Position.Col);
+        openList.Enqueue(start, start.F);
+
+        Node current = new Node(new Point(), 'S');
+        while (openList.Count > 0 && !closedList.Exists(x => x == goal))
+        {
+            current = openList.Dequeue();
+            closedList.Add(current);
+
+            foreach (Node neighbor in GridHelper.GetOrthagonalNeighbors(maze, current, (x) => x.Value != '#'))
+            {
+                if (!closedList.Contains(neighbor))
+                {
+                    bool isFound = false;
+                    foreach (var openListNode in openList.UnorderedItems)
+                        if (openListNode.Element == neighbor)
+                            isFound = true;
+
+                    if (!isFound)
+                    {
+                        int weight = 0;
+                        neighbor.Parent = current;
+                        neighbor.Cost = weight + current.Cost + 1;
+                        neighbor.DistanceToTarget = Math.Abs(goal.Position.Row - neighbor.Position.Row) + Math.Abs(goal.Position.Col - neighbor.Position.Col);
+                        openList.Enqueue(neighbor, neighbor.F);
+                    }
+                }
+            }
+        }
+
+        if (!closedList.Exists(x => x == goal))
+            return null;
+
+        Node temp = closedList[closedList.IndexOf(current)];
+        if (temp == null) return null;
+
+        do
+        {
+            path.Push(temp);
+            temp = temp.Parent;
+        } while (temp != start && temp != null);
+
+        return path;
     }
 
     public static List<Point> GetAllNeighbors<T>(T[,] grid, Point currPosition)
