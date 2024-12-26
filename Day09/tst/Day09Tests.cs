@@ -76,29 +76,17 @@ public class Day09Tests
         Assert.Equal(1928, checksum);
     }
 
-    [Fact]
-    public void DefragContiguous_WithSampleData_ShouldWork()
+    [Theory]
+    [InlineData("00...1112......333.44.5555.6666.777.888899.", "00992111.888844333....5555.6666.777........")]
+    [InlineData("000...111...222...333...444...555...666...7", "0007..111666222555333444...................")]
+    [InlineData("00...111...2...333.44.5555.6666.777.888899", "00992111777.44.333....5555.6666.....8888..")]
+    public void DefragContiguous_WithEdgeCases_ShouldWork(string input, string expectedOutput)
     {
         Solver solver = new();
-        List<long> hdd = "00...111...2...333.44.5555.6666.777.888899"
+        List<long> hdd = input
             .Select(c => c == '.' ? -1 : (long)char.GetNumericValue(c))
             .ToList();
-        List<long> expected = "00992111777.44.333....5555.6666.....8888.."
-            .Select(c => c == '.' ? -1 : (long)char.GetNumericValue(c))
-            .ToList();
-        hdd = solver.DefragContiguous(hdd);
-
-        Assert.Equal(expected, hdd);
-    }
-
-    [Fact]
-    public void DefragContiguous_WithEdgeCase_ShouldWork()
-    {
-        Solver solver = new();
-        List<long> hdd = "00...1112......333.44.5555.6666.777.888899."
-            .Select(c => c == '.' ? -1 : (long)char.GetNumericValue(c))
-            .ToList();
-        List<long> expected = "00992111.888844333....5555.6666.777........"
+        List<long> expected = expectedOutput
             .Select(c => c == '.' ? -1 : (long)char.GetNumericValue(c))
             .ToList();
         hdd = solver.DefragContiguous(hdd);

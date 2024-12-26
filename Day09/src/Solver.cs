@@ -84,14 +84,6 @@ public class Solver
             int startFile = rIndex + 1;
             int fileLength = endFile - startFile + 1;
 
-            //           1         2         3         4
-            // 012345678901234567890123456789012345678901
-            // 00...111...2...333.44.5555.6666.777.888899
-            // 0099.111...2...333.44.5555.6666.777.8888..
-            // 0099.1117772...333.44.5555.6666.....8888..
-            // 0099.111777244.333....5555.6666.....8888..
-            // 00992111777.44.333....5555.6666.....8888..
-
             bool spaceFound = false;
             int lIndex = 0;
             // now keep testing space on the left until there's no more space to test
@@ -99,11 +91,11 @@ public class Solver
             {
                 while (defragged[lIndex] != -1) lIndex++;
                 int startFreespace = lIndex;
-                while (defragged[lIndex] == -1) lIndex++;
+                while (lIndex < defragged.Count && defragged[lIndex] == -1) lIndex++;
                 int endFreespace = lIndex;
                 int amtFreespace = endFreespace - startFreespace;
 
-                if (amtFreespace >= fileLength && lIndex < rIndex)
+                if (amtFreespace >= fileLength && lIndex <= rIndex + 1)
                 {
                     spaceFound = true;
                     for (int i = 0; i < fileLength; i++)
