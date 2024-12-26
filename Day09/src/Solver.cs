@@ -20,7 +20,6 @@ public class Solver
         hdd = DefragContiguous(hdd);
         long checksum = CalcChecksum(hdd);
 
-        // 6415163644414 too high
         return checksum.ToString();
     }
 
