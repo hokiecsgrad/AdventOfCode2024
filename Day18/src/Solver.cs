@@ -7,7 +7,7 @@ public class Solver
 {
     public string SolvePart1(string[] data)
     {
-        Node[,] maze = GridHelper.CreateGrid(71, 71, new Node(new Point(), '.'));
+        Node[,] maze = CreateGrid(71, 71, new Node(new Point(), '.'));
         List<Point> walls = ParseData(data);
 
         AddWallsToMaze(ref maze, walls.Take(1024).ToList());
@@ -23,7 +23,7 @@ public class Solver
 
     public string SolvePart2(string[] data)
     {
-        Node[,] maze = GridHelper.CreateGrid(71, 71, new Node(new Point(), '.'));
+        Node[,] maze = CreateGrid(71, 71, new Node(new Point(), '.'));
         List<Point> walls = ParseData(data);
 
         AddWallsToMaze(ref maze, walls.Take(1024).ToList());
@@ -127,6 +127,17 @@ public class Solver
                     maze[row, col] = new Node(new Point(row, col), '#');
     }
 
+    public Node[,] CreateGrid(int maxRows, int maxCols, Node defaultValue)
+    {
+        Node[,] grid = new Node[maxRows, maxCols];
+
+        for (int row = 0; row < maxRows; row++)
+            for (int col = 0; col < maxCols; col++)
+                grid[row, col] = defaultValue;
+
+        return grid;
+    }
+
     public List<Point> ParseData(string[] data)
     {
         List<Point> points = new();
@@ -142,6 +153,7 @@ public class Solver
         return points;
     }
 }
+
 
 public class Node
 {

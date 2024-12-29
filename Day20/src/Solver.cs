@@ -10,8 +10,8 @@ public class Solver
         List<Stack<Node>> allPaths = new();
 
         Node[,] maze = ParseGrid(data);
-        Node start = GridHelper.GetPositionOf(maze, 'S');
-        Node end = GridHelper.GetPositionOf(maze, 'E');
+        Node start = GetPositionOf(maze, 'S');
+        Node end = GetPositionOf(maze, 'E');
         Stack<Node> path = AStar(maze, start, end);
         int normalSolution = path.Count;
         Console.WriteLine($"Normal path is {normalSolution} points long.");
@@ -62,7 +62,7 @@ public class Solver
             current = openList.Dequeue();
             closedList.Add(current);
 
-            foreach (Node neighbor in GridHelper.GetOrthagonalNeighbors(maze, current, (x) => x.Value != '#'))
+            foreach (Node neighbor in GetOrthagonalNeighbors(maze, current, (x) => x.Value != '#'))
             {
                 if (!closedList.Contains(neighbor))
                 {
@@ -143,6 +143,40 @@ public class Solver
         return neighbors;
     }
 
+    public List<Node> GetOrthagonalNeighbors(Node[,] grid, Node currPosition, Func<Node, bool> comparer)
+    {
+        List<Node> neighbors = new();
+
+        int row = currPosition.Position.Row - 1;
+        int col = currPosition.Position.Col;
+        if (row >= 0 && comparer(grid[row, col]))
+            neighbors.Add(grid[row, col]);
+
+        row = currPosition.Position.Row + 1;
+        if (row < grid.GetLength(0) && comparer(grid[row, col]))
+            neighbors.Add(grid[row, col]);
+
+        row = currPosition.Position.Row;
+        col = currPosition.Position.Col - 1;
+        if (col >= 0 && comparer(grid[row, col]))
+            neighbors.Add(grid[row, col]);
+
+        col = currPosition.Position.Col + 1;
+        if (col < grid.GetLength(1) && comparer(grid[row, col]))
+            neighbors.Add(grid[row, col]);
+
+        return neighbors;
+    }
+
+    public Node GetPositionOf(Node[,] grid, char target)
+    {
+        for (int row = 0; row < grid.GetLength(0); row++)
+            for (int col = 0; col < grid.GetLength(1); col++)
+                if (grid[row, col].Value == target)
+                    return grid[row, col];
+        return new Node(new Point(-1, -1), '\0');
+    }
+
     public Node[,] ParseGrid(string[] data)
     {
         Node[,] grid = new Node[data.Length, data[0].Length];
@@ -154,5 +188,103 @@ public class Solver
                 grid[row, col] = curr;
             }
         return grid;
+    }
+}
+
+public class Point : IComparable<Point>
+{
+    public int Row { get; set; }
+    public int Col { get; set; }
+
+    public Point(int row, int col)
+    {
+        Row = row;
+        Col = col;
+    }
+
+    public Point()
+    {
+        Row = -1; Col = -1;
+    }
+
+    public int CompareTo(object obj)
+    {
+        if (obj == null) return 1;
+
+        if (obj is Point otherPoint)
+            return CompareTo(otherPoint);
+        else
+            throw new ArgumentException("Object is not a Point");
+    }
+
+    public int CompareTo(Point other)
+    {
+        if (other == null) return 1;
+
+        int rowComparison = this.Row.CompareTo(other.Row);
+        if (rowComparison != 0)
+        {
+            return rowComparison;
+        }
+        else
+        {
+            return this.Col.CompareTo(other.Col);
+        }
+    }
+
+    public static bool operator ==(Point p1, Point p2)
+    {
+        if (ReferenceEquals(p1, p2)) return true;
+        if (p1 is null || p2 is null) return false;
+
+        return p1.Row == p2.Row && p1.Col == p2.Col;
+    }
+
+    public static bool operator !=(Point p1, Point p2)
+    {
+        return !(p1 == p2);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Point point)
+        {
+            return this == point;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Row, Col);
+    }
+
+    public override string ToString()
+    {
+        return $"({Row}, {Col})";
+    }
+}
+
+public class Node
+{
+    public Node? Parent { get; set; } = null;
+    public char Value { get; set; }
+    public Point Position { get; set; }
+    public int Cost { get; set; }
+    public int DistanceToTarget { get; set; }
+    public int F { get { return Cost + DistanceToTarget; } }
+
+    public Node(Point pos, char val)
+    {
+        Position = pos;
+        Value = val;
+        Cost = int.MaxValue;
+    }
+
+    public Node()
+    {
+        Position = new Point(-1, -1);
+        Value = '\0';
+        Cost = int.MaxValue;
     }
 }

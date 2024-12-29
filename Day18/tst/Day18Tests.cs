@@ -21,7 +21,7 @@ public class Day18Tests
     {
         Solver solver = new();
 
-        Node[,] maze = solver.CreateGrid(7, 7, '.');
+        Node[,] maze = solver.CreateGrid(7, 7, new Node(new Point(0, 0), '.'));
 
         Assert.Equal(7, maze.GetLength(0));
         Assert.Equal(7, maze.GetLength(1));
@@ -44,7 +44,7 @@ public class Day18Tests
     {
         Solver solver = new();
 
-        Node[,] maze = solver.CreateGrid(7, 7, '.');
+        Node[,] maze = solver.CreateGrid(7, 7, new Node(new Point(0, 0), '.'));
         List<Point> walls = solver.ParseData(data);
 
         solver.AddWallsToMaze(ref maze, walls.Take(12).ToList());
@@ -63,7 +63,7 @@ public class Day18Tests
     {
         Solver solver = new();
 
-        Node[,] maze = solver.CreateGrid(7, 7, '.');
+        Node[,] maze = solver.CreateGrid(7, 7, new Node(new Point(0, 0), '.'));
         List<Point> walls = solver.ParseData(data);
 
         solver.AddWallsToMaze(ref maze, walls.Take(12).ToList());

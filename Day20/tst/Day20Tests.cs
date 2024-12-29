@@ -32,8 +32,8 @@ public class Day20Tests
         Solver solver = new();
 
         Node[,] maze = solver.ParseGrid(data);
-        Node start = GridHelper.GetPositionOf(maze, 'S');
-        Node end = GridHelper.GetPositionOf(maze, 'E');
+        Node start = solver.GetPositionOf(maze, 'S');
+        Node end = solver.GetPositionOf(maze, 'E');
         Stack<Node> path = solver.AStar(maze, start, end);
 
         Assert.Equal(84, path.Count);
@@ -47,8 +47,8 @@ public class Day20Tests
         List<Stack<Node>> allPaths = new();
 
         Node[,] maze = solver.ParseGrid(data);
-        Node start = GridHelper.GetPositionOf(maze, 'S');
-        Node end = GridHelper.GetPositionOf(maze, 'E');
+        Node start = solver.GetPositionOf(maze, 'S');
+        Node end = solver.GetPositionOf(maze, 'E');
         Stack<Node> path = solver.AStar(maze, start, end);
         int normalSolution = path.Count;
 
